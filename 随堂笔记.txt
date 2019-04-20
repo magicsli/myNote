@@ -1,0 +1,120 @@
+1, 跨域请求: 
+	Access-Control-Allow-Origin;出现此代码就是跨域错误
+    同源:
+	协议,域名,端口完全一致
+    跨域的概念:
+	跨域不同访问数据,不能进行DOM操作
+	若协议,端口,域名有一项不一样,即视为跨域
+    解决方案:
+	1,jsonp
+	    --要求: 服务器支持jsonp
+	2,CORS
+	    --要求: 服务器做了CORS的处理
+	3,让后台返回数据
+	    --让后台程序员编写后台代码去请求数据,并制作一个本地接口给你
+    
+    解决办法:
+	1,在服务端添加响应头 -CORS跨域
+		header("Access-Control-Allow-Origin: *")
+		允许所有的域名发送请求
+
+		header("Access-Control-Allow-Origin: www.test.com")
+		允许指定的域名发送请求
+
+	    ---应用较少,因为有安全性问题,容易引起CORS攻击
+	    ---只能对自己的服务器进行设置,无法干涉其他人的服务器如果对方未设置CORS,那么就无法使用
+
+	2,使用jsonp进行跨域请求
+	    -- dataType: jsonp (设置JQ的ajax数据类型)
+	    jsonp需要进行调用,需要服务器端的配合,且会在请求头后自动拼接一个回调函数, 
+	    后台会把这个函数拼接数据进行返回,
+  	3, html元素支持跨域请求,比如SRC,href即可以访问其他域的文件信息,
+		
+	jsonp的原理:
+		a,使用script标签的src属性来发送跨域请求(html元素的请求默认为get)	
+		b, 后台要求前端传递一个callback的参数,也就是回调函数的名称,
+		c, 后台要编写支持jsonp的代码,编写一个函数调用,并且通过函数的参数将数据传回前台,返回一个函数调用
+		d, 前端收到数据,做相应的处理 ,		
+		
+	    注意: 发送函数名必须是字符串格式!
+	    ajax和jsonp的本质不一样,ajax的核心是通过XMLHttpRequest来发送请求,而jsonp是通过script来发送请求
+		
+	 formdata 可以直接将表单元素作为数据传输
+		var formdata = new FormData(myform);
+	     注意: 
+	
+	      创建formdata需要一个dom元素的参数
+
+	      如果是使用formdata对象来向服务器发送数据,就无需设置请求头,因为formdata对象会自动设置请求头!!!
+		如果使用的是formdata传参,则不要人为设置请求头
+	      可以自由的追加参数,
+			formdata.append("key", "value")
+		上传文件时注意中文名称是不被支持的, 以及文件大小也有限制
+		监听上传文件的进度: 
+			xhr.upload.onprogress = function				(e){ 
+	var current = e.loaded   -loaded,加载好的部分	
+	var total = e.total;     - total需要加载的全部
+
+	 current / total * 100 +"%"; --这就是进度的百分比
+					}
+		注意,监听事件必须要在请求发送前设置!
+
+	 timeout 请求时间,如果响应时间大于timeout则视为请求超时,
+	 
+	AJAX 总结:
+		1,概念, 客户端(访问者),服务器(处理访问者)
+	从客户端发送请求给服务器, 从服务器返回响应给客户端
+		2,ajax 的五个步骤来发送get/post请求
+			a,创建核心对象
+			   var xhr = new  XMLHttpRequest()
+			b,设置请求行,如果是get请求,必须将参数拼接在地址后面
+		xhr.open("get",  "请求的地址?键=值&键=值")
+		xhr.open("post","请求的地址");
+			c, 设置请求头
+		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		get请求不用设置请求头
+			d, 发送请求,如果是post请求,必须将传递给后台的参数作为send方法的参数
+		xhr.send(null)
+		xhr.send("键=值 & 键=值")
+			e,监听服务器的返回结果
+		xhr.onreadystatechange = function(){
+			if(this.status ==200 &&  this.readyState == 4){
+			请求成功
+		}
+
+	
+		}
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
