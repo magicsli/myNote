@@ -207,7 +207,7 @@ moudle.exports={							--引出模块配置
 + 在`webpack.config.js`中添加一个模块功能:
 
   + ```
-    moudle : {        -- 增加一个模块功能  用来引入.css文件并且解析style
+    moudle : {        -- 增加一个模块功能  用来引入.css文件并且解析style  -- 这个只需要创建一个就好了时
           rules: [	  --  设置规则
               {
                   test :/\.css/,   -- 检验文件后缀

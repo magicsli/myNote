@@ -1,0 +1,133 @@
+	document 文档
+	window 主对象/根目录
+	
+	set 设置，
+	get 查找
+	remove 删除
+	value 属性值	
+	Attribute  自定义属性
+
+	parent  父级	     附：用于指定元素节点位置 - 配合替换插入- 
+	    - sibling   兄弟	
+	    	- previous  上一个
+	   	- next      下一个
+
+	child  子
+	Element 元素	
+	Node 节点
+	type  类型
+	focus 焦点    - onfocus 获得焦点事件
+	click  点击   
+	touch  触摸
+	mouse 鼠标
+	move 移动      - 在事件对象中一般配合down，up 使用 - 34行	
+
+	over 经过，进入   - enter（触发冒泡事件）
+
+	leave 离开        - out  （触发冒泡事件，与leave相反）
+
+	scroll  滚动
+	onscroll  滚轮滚动事件
+	scrollTop  滚动距离（向上的滚动距离）
+	key   键盘
+	which  键值（事件对象的一个属性 e.which）
+	down 按下
+	up   离开
+	forword  前进
+	back  返回
+	page 页面
+	befor  在....之前			
+	after  在....之后
+	
+	location  位置（内置对象）
+	reload   重新加载
+	assign  指向，指定
+	     --location.reload（true）	页面刷新
+	     --location.assign (www.baidu.com) 重新指向地址
+	     --location.href（www.baidu.com）  超链接
+	
+	interval (间隔)         计时器 - 循环，需要清除-	
+	timeout （暂停休息，等待） 计时器 - 不需要清除 -
+			（--计时器需要用变量等接受返回值）
+	
+	append  增加（在末尾增加） - appendElement（）
+		附加 ： appendChilk  将元素放入新位置
+	create	创建   
+	inster  插入
+	replace  替换
+		--replaceChild 替换元素 - 返回被替换的元素 -
+	          用法：  replaceChild （新元素 ， 被替换的元素）
+			
+	event	事件 （事件对象）---缩写 e
+		如 e.clientX — 事件中鼠标的x坐标
+		-兼容性处理  e = e || window.event
+		
+	Eventlistener  事件监听 
+		addEventlistener --增加事件监听
+
+		--（在老版本的IE中，不兼容此方法，使用attachEvent）
+			
+	e.preventDefault() 清除元素的默认行为（如a的跳转）	
+		---e.returnValue = false  IE 特有清除方法
+
+	target 目标 
+	
+	onload  加载（在页面加载后执行）- window 内置对象
+	onunload 卸载 （在页面卸载时执行）
+		--卸载时所有对话框都无法使用，window对象冻结
+	
+	history  历史记录（缓存）
+
+		- history.go（1）  前进一步
+		- history.back（）后退
+		- hisTory.forword（） 前进
+
+	client  内容，客户
+
+		clientLeft  左边框宽度
+		clientTop   上边框宽度  
+
+	    --同理的下边框 ，右边框---
+
+		clientWidth  不包括边框的盒子的宽
+		clientHeight  不包括边框的盒子的高
+
+	scroll  滚动
+
+		scrollWidth  内容实际宽度（包括被隐藏部分）	
+		scrollHeight 内容实际高度（包括被隐藏部分）
+	     -----不含滚动条本身的宽度
+
+		scrollTop     滚动条距离上部的距离（滚动距离）
+		scrollLeft    滚动条距离左边的距离（滚动距离）
+	
+	offset 偏移（字义-抵偿）
+
+		offsetWidth   元素可视区的宽度 
+		offsetHeight  元素可视区的高度 
+
+	    ------ 包括padding 和 border 属性----
+
+		offsetLeft  左偏移量
+		offsetRight 右偏移量
+
+	    ------- 相对于最近的定位父级元素------
+	
+
+	clientX  事件对象的鼠标的 X坐标 
+
+		 ----clientY 事件对象的鼠标的 Y 坐标
+
+		 ----pageX 事件对象的鼠标的X坐标等于（clientX）
+			--老版本的使用方法
+
+  高级---
+	
+	prototype 原型
+	constructor  访问对象原型 （查找构造函数的方法）
+	object  对象
+	instanceof  判断新对象是否为实例成员
+	search  查找 	string.search（/c/i）--正则方法
+
+	
+  
