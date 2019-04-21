@@ -43,6 +43,7 @@
 #### 在网页中会引用哪些常见的静态资源
 
 + `JS`
+
   - `.js`  	``jsx`	`.coffee`	`.ts(typescript)`		
 
 + `css`
@@ -249,3 +250,29 @@ moudle.exports={							--引出模块配置
 
 
 ​	
+
+##`Webpack` 命令行流程：
+
+1.	Webpack 命令行流程：
+   1.	cnpm init
+   2.	cnpm i webpack -d
+   3.	cnpm i webpack-cli -d
+   4.	cnpm i webpack-dev-server -d
+     a)	需要在package.json 配置：“dev”:”webpack-dev-server”
+   5.	cnpm i html-webpack-plugin -d 
+     a)	需要在webpack.config.js 配置 插件
+   6.	cnpm i jquery less -d
+     a)	根据需要下载一些第三方的 loader 和依赖项
+   7.	cnpm i css-loader style-loader less-loader url-loader file-loader -d
+     babel 模块：
+   8.	cnpm i babel -d
+   9.	cnpm i babel-loader -d
+   10.	cnpm i @babel/core @babel/cli @babel/preset-env -d
+     a)	引入babel的预设包，加载一些es6 or es7新的模块，语法
+   11.	cnpm i @babel/plugin-transform-runtime -d
+      a)	引入babel插件， 转换工具
+   12.	cnpm i @babel/runtime @babel/plugin-proposal-function-bind -d
+      a)	函数插件，其中@babel/plugin-proposal-function-bind就相当于stage-0
+   13.	cnpm i @babel/plugin-proposal-class-properties -d
+      a)	类插件，解析类的语法
+   14.	npm run dev
