@@ -1,4 +1,4 @@
-  初始化git仓库    git init 
+git   初始化git仓库    git init 
  设置当前用户 git config --global user.name "用户名"
 	      git config --global user.email "用户邮箱"
 
@@ -8,9 +8,13 @@
 
 	git status 查看这个文件的状态
 	
+	git log 查看历史记录
+	
+	git log --oneline 查看版本号和提交信息
+	
 	暂存目录下的所有修改的文件 git add ./ 
 
-	全部提交 git commit --all -m "信息"
+	全部提交 git commit --all -m "git 信息"
 	
 	忽略文件
 		gitignore, 在这个文件中科院设置要被忽略的文件或者目录
