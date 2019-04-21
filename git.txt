@@ -1,4 +1,4 @@
- 初始化git仓库    git init 
+  初始化git仓库    git init 
  设置当前用户 git config --global user.name "用户名"
 	      git config --global user.email "用户邮箱"
 
