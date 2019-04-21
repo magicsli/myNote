@@ -105,7 +105,7 @@
 
 + j借助于`webpack`这个前端自动化构建工具, 可以完美的实现资源的合并, 打包, 混淆等诸多功能.
 
-+ 根据官网的图片介绍webpack打包的过程
++ 根据官网的图片介绍`webpack`打包的过程
 
 + <a href="http:// webpack.github.io">[webpack官网]</a>
 
@@ -119,19 +119,132 @@
 
 ​	1, 运行`npm i webpack -g`全局安装`webpack`,这样就能在全局使用`webpack`中的命令
 
-​	2, 根据项目目录中运行`npm i webpack --save-dev`安装到项目依赖中
+​	2, 根据项目目录中运行`npm i webpack --save-dev`安装到项目依赖中,
 
- 
+​		如果版本是4.* .* 就要安装` webpack-cli` :
 
-#### 初步使用`webpack`打包构建列表隔行变色案例
+​			`npm install webpack-cli --save-dev`
+
+### 举个例子:
+
+​	
+
++ 我要导入一个script ,除了以前的`src`引入 ,现在用`webpack`试试;
+  + 1,   准备项目 :
+    + `npm  init -y`		-- 注意: 这里如果用`npm`就不用yarn,  俩者会合并,可能带来不必要的bug
+    + `npm install webpack webpack-cli --save-dev`        -- 下载依赖包`webpack`
+    + 创建 `webpack.config.js` 文件           --这是`webpack`的配置文件  -- 目前不会用到,在配置中使用
+    + 调整`package.json`文件, :
+      +  在配置中删除这一段, 我们不需要这句 "`main`" : "`index.html`" 
+      + 将配置文件设置为私有,防止意外发布代码  "`private`" : `true`;  放在刚才删除的地方
+    + 创建一个包, 捆绑 `lodash`  依赖项 `index.js`     :
+      + `npm install --save-dev lodash`
+    + 在`js`中导入 -   import   _ form ' lodash'
+    + 将我们的`HTML`中的src都去掉
+    + 引入一个 `main.js` 标签
+    + 运行` npx webpack`  '.`/src/index.js`'   '`./dist/main.js`'
+
+
+
+## 使用配置
 
 ------
 
+​	在我们之前创建的` webpack-config.js`中我们可以手动进行配置. 
+
+  + 注:    	在版本4 .* .* 的时候,才开始, 在4.0.0之后`webpack`不需要任何配置,但是大多数项目需要更复杂的配置,所以`webpack`支持配置文件,这比手动输入命令行要舒服的多:
+
+
+
+	#### 示例:
+
+​		
+
+```
+const path = require('path');				--创建一个常量请求path
+
+moudle.exports={							--引出模块配置
+    entry  : './src/index.js',				-- 设置入口
+    output : {								-- 输出
+        filename:'main.js',					-- 文件名   main.js
+        path:path.resolve(__dirname, 'dist')   -- 设置路径 放在目录名 dist 之下
+    }
+};
+```
 
 
 
 
 
+## `npm`脚本
+
+------
+
+从`cli`运行`webpack`的本地副本太麻烦; 所以我们可以有个快捷的方法: 添加一个`npm `脚本来调整我们的`package.json`
+
+​	在   "script" : {
+
+​	删除	-         ` "test" :  "echo \ "Error:  no  test   specified\" && exit 1 ",`
+
+​	增加	+	`"test":"echo \ "Error:  no  test   specified\" && exit 1 ",`
+
+​	增加	+	`"build":"webpack"`
+
+}		
+
+
+
+####现在`npm run build`可以使用该 `npx`命令代替我们之前使用的命令. 请注意,  `script`我们可以按照与之相同的方式引用本地安装的`npm`软件包,  
+
+
+
+### 导入一些`css`文件试试
+
++ 下载 `style-loader  ` 和  ` css-loader` 工具包:     `npm install --save-dev style-loader css-loader`
+
+  + 我们需要这些加载器来加载我们的`.css`文件以及`style`的
+
++ 在`webpack.config.js`中添加一个模块功能:
+
+  + ```
+    moudle : {        -- 增加一个模块功能  用来引入.css文件并且解析style
+          rules: [	  --  设置规则
+              {
+                  test :/\.css/,   -- 检验文件后缀
+                  use:[			   -- 设置加载器插件
+                      'style-loader',  -- 加入style-loader插件
+                      'css-loader'	   -- 加入css-loader插件
+                  ]
+              }
+          ]
+        	
+    }
+    ```
+
+
+
+### 加载图片
+
++ 下载文件加载器 ( ` file-loader`  )    	` npm install --save-dev file-loader`
+
++ 在`webpack.config.js`中加入此引入图片的模块功能
+
+    	
+
+  ```
+  moudle : {     -- 增加一个模块功能 用来引入图片格式的文件
+      rules:[		-- 设置规则
+          {
+              test:/\.(png|svg|jpg|gif)$/,   -- 检验文件后缀
+              use:[						   -- 设置要使用的插件
+                  "file-loader"			   --  引入文件加载插件
+              ]
+          }
+      ]
+  }
+  ```
+
+  
 
 
 
