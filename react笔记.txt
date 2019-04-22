@@ -205,6 +205,8 @@
 	}
  
   	19,react.ajax:
+
+	测试接口:  https://api.github.com/search/repositories?q=r&sort=stars
 		
 		react本身只关注界面,并不包含发送ajax的代码
 		前端应用需要通过ajax请求与后台进行交互(json 数据)

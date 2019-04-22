@@ -155,9 +155,9 @@
 
   + 注:    	在版本4 .* .* 的时候,才开始, 在4.0.0之后`webpack`不需要任何配置,但是大多数项目需要更复杂的配置,所以`webpack`支持配置文件,这比手动输入命令行要舒服的多:
 
+#### 示例
 
 
-	#### 示例:
 
 ​		
 
@@ -258,21 +258,99 @@ moudle.exports={							--引出模块配置
    2.	cnpm i webpack -d
    3.	cnpm i webpack-cli -d
    4.	cnpm i webpack-dev-server -d
-     a)	需要在package.json 配置：“dev”:”webpack-dev-server”
+     	需要在package.json 配置：“dev”:”webpack-dev-server”
    5.	cnpm i html-webpack-plugin -d 
-     a)	需要在webpack.config.js 配置 插件
-   6.	cnpm i jquery less -d
-     a)	根据需要下载一些第三方的 loader 和依赖项
+     	需要在webpack.config.js 配置 插件
+   6.	cnpm i jquery less -dev
+     	根据需要下载一些第三方的 loader 和依赖项
    7.	cnpm i css-loader style-loader less-loader url-loader file-loader -d
      babel 模块：
    8.	cnpm i babel -d
    9.	cnpm i babel-loader -d
    10.	cnpm i @babel/core @babel/cli @babel/preset-env -d
-     a)	引入babel的预设包，加载一些es6 or es7新的模块，语法
+     	引入babel的预设包，加载一些es6 or es7新的模块，语法
    11.	cnpm i @babel/plugin-transform-runtime -d
-      a)	引入babel插件， 转换工具
+      	引入babel插件， 转换工具
    12.	cnpm i @babel/runtime @babel/plugin-proposal-function-bind -d
-      a)	函数插件，其中@babel/plugin-proposal-function-bind就相当于stage-0
+      	函数插件，其中@babel/plugin-proposal-function-bind就相当于stage-0
    13.	cnpm i @babel/plugin-proposal-class-properties -d
-      a)	类插件，解析类的语法
+      	类插件，解析类的语法
    14.	npm run dev
+
+
+
+
+
+##`webpack` 的概念
+
+------
+
+### 入口
+
+   + 入口起点 ( `entry`) 指示  `webpack` 应该使用哪个模块, 来作为构建其内部依赖图的开始, 进入入口起点后, `webpack` 会找出有哪些模块和库入口起点( 直接和间接 ) 依赖的.
+
+   + 每个依赖项随即被处理, 最后输出到称之为 `bundles` 的文件中, 我们将在下一章节详细谈论这个过程
+
+   + 可以通过`webpack`配置中配置 `entry` 属性,  来指定一个入口起点(或多个入口起点). 默认值为 `./src `
+
+       	
+
+     ```
+     module.exports = {
+         entry: "./path/to/my/entry/file.js"
+     };
+     ```
+
+     
+
+
+
+## 出口
+
++ `output`属性告诉`webpack` 在哪里输出它所创建的`bundles`, 以及如何命名这些文件, 默认值为`./dist`  基本上,整个应用程序结构, 都会被编译到你指定的输出路径的文件夹中. 你可以通过在配置中指定`output` 字段, 来配置这些处理过程.
+
+  ​	
+
+  ```
+  const path = require('path');
+  module.exports = {
+      entry:"./path/to/my/entey/file.js",
+      output:{
+          path: path.resolve(_dirname, 'dist'),
+          filename:"my-frist-webpack.bunle.js"
+      }
+  };
+  ```
+
+  
+
+## loader
+
+​	设置加载器, 可以处理  `webpack`  的配置中 `loader` 有两个目标:
+
+​			1,` test `属性, 用于标识出应该被对应的 `loader` 进行转换的某个或某些文件
+
+​			2, `use` 属性,   表示进行转换时,  应该使用哪个 `loader`
+
+​	
+
+```
+	const path = require("path");
+
+	const config = {
+  	  output: {
+ 	       filename:'my-first-webpack.bundle.js'
+ 	   },
+ 	   module:[
+ 	       rules: [
+  	          {
+  	              test:/\.text$/, use:'raw-loader'
+ 	           }
+ 	       ]
+  	    ]
+	};
+
+
+	module.exports = config;
+```
+
