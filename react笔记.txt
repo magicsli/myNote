@@ -259,7 +259,7 @@
 
    --- 使用消息订阅(subscribe)-发布(publicsh)机制
 	
-	pubsubjs 库 -  
+	- pubsubjs 库 -  
 
 	PubSub.subscribe("事件名", 事件回调函数 ) 订阅消息:
 
