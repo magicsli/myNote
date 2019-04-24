@@ -99,9 +99,12 @@
 
  + 6,   使用 res.writeHeader,  指定Set-Cookie 来向客户端写入Cookie, 如果写入多个,  则值应该是一个数组
 
-   
 
-​	实例;
+
+
+### 设置Cookie实例:
+
+
 
 ​	const  http = require('http')
 
@@ -124,9 +127,21 @@ server.listen(4000, ()=>{
 
 })
 
-```
-		
-```
+
+
+#### 设置cookie的注意点
+
++ 1, `cookie`在 `res.writeHeader `中设置, 在请求头中设置的cookie
++ 2, 设置cookie是注意, 我们在是在请求的数据对象中设置, 对象的键名是唯一的
++ 3, 如果要设置多个cookie值,我们使用数组的形式的传参
+
+​	
+
+### 语法
+
+​	`_filename`  当前文件
+
+​	`_dirname  `    当前目录
 
 ​	
 
@@ -134,13 +149,138 @@ server.listen(4000, ()=>{
 
 
 
+### 创建最基本的http服务器
+
+![http通信模型](C:\Users\25445\Desktop\http通信模型.png)
+
++ 导入Node中提供的核心模块 http
+
+  + `const http = require("http") `
+
++ 创建服务器
+
+  + `const server = http.createServer()`
+
++ 为这个server服务器, 通过 on 方法, 绑定一个事件
+
+  + `server.on("request")`    -- 绑定一个请求事件
+  + 问题:  这request 事件什么时候出发
+  + 回答:  每当服务器接收到一个客户端的请求, 就会立即触发这request事件
+
++ 启动服务器
+
+  + 第一个参数是  端口号
+
+  + 第二个参数,  是 IP 地址, 可选, 如果不填写, 则默认监听 127.0.0.1
+
+  + 最后还有一个回调函数, 表示, 当服务器正常启动之后,调用一下这个函数
+
+  + `server.listen(3000, function(){`
+
+    ​	`console.log( " hello word " )`
+
+     `} )`
+
++ 注意:
+
+  + 我们自己写服务器的时候, 要时刻记着, 请求 - 处理 - 响应
+  + 在服务器的回调函数列表中 ,有两个参数, 其中,第一个参数, 是Request,  第二个参数是 Response 
+
++ `server.on("request", function(req,  res) {`
+
+  ​	`console.log( " ok " )`;
+
+  ​	`res.end( "` ***这是服务器返回的数据*** `" )   `
+
+   //  响应, 就是返回给客户端的数据. 类似于php的 echo
+
+  // 每次请求处理完毕, 必须显示调用一下 response 对象的end 方法; 来结束这次响应, 否则, 客户端拿不到数据
+
+  `})`
+
++ 获取浏览器请求的url地址:
+
+  + `req.url`
+  + 服务器获得url地址以  `/`   开头
+  + 如何拿到请求的类型:
+    + `req.method.toLowerCase()`
+  + 每当有客户端来请求服务器, 我们服务器, 直接把请求的类型和请求的url地址, 拼接成字符串给客户端显示
+    + res.end("请求的类型是:" +req.method+"请求的URL地址是"+req.url)
+
+  
+
++ 设置返回响应头:
+
+   	`res.writeHeader(200, {`
+
+  ​		"`Content-Type" : "text/html; charset=utf-8`"
+
+  ​	`})`
+
+  - 第一个参数, 是数值类型的状态码,  200 成功,   300 重定向,  404 资源找不到,    500 服务器内部错误
+  - 第二个参数是一个配置对象:
+    - Content-Type 的值有   
+      - text/html     
+      - text/plain
+      - image/jpg
+      - image/png
+      - image/gif
+    -  注意格式,格式必须一致
+
+  ​	
+
++ 根据请求类型判断返回数据:
+
+  ​	
+
+  ```
+  server.on("request", function(req, res){
+      if(req.method === "POST" && req.url === "/home" ){
+          res.end("您访问的类型是POST")
+      }
+      
+  })
+  ```
+
++ 根据请求返回页面
+
+  + 注意: res.end() 只接受字符串和Buffer二进制的参数
+  + 需要先把html文件用readfile解析, 再通过res.end()返回
+  + 需要用到fs模块和path模块     代码:
+
+  ```
+  const http = require("http")
+  const fs = require("fs")
+  const path = require("path")
+  const server = http.createServer()
+  server.on("request", (req, res)=> {
+      fs.readFile(path.join(_dirname, "/views/index.html"),   "utf-8", (err, data) => {
+          if(err) return res.end("404")
+          res.end(data)
+      }
+  })
+  ```
+
+  
 
 
 
 
 
+### 模块
 
++ require  请求模块, 类似于 import 
 
++ module.export    导出模块  类似于 export:
 
+  +  module.export.xxx = xxx ; 导出xxx
 
+  + 我们一般采用  moudle.export = {
 
+    ​	 xxx = xxx,
+
+    ​	 yyy = yyy
+
+    } 
+
+  
