@@ -1,3 +1,7 @@
+---
+
+---
+
 ## `redux`理解:
 
 ​		收集组件的状态并且统一管理,解决跨组件传值的困难性
@@ -19,9 +23,7 @@
 
 
 
-​		![](C:\Users\25445\Desktop\Redux工作流程.png)
-
-
+![Redux工作流程](./Redux工作流程.png)
 
 + `Action Creators` 创建一个 `action `对象 
 + store` 状态存储管理库
@@ -190,13 +192,215 @@
 ### `react-redux`
 
 + 一个`react`的插件库
+
 + 专门用来简化`react`应用中使用`redux`
-+ 
+
+  
+
+### 示例代码:
+
+```
+	// 我们使用的react-redux 中提供了Provider组件
+	拥有了provider组件,我们不需要添加监听事件,只需要将渲染的组件放在其中例:
+			render( <Provider>
+						<App />
+					</Provider>, document.getElementbyId("root")  	)
+					
+   	//  将我们需要的函数通过props值返回给组件,通过连接函数(写法比较乖)
+   	 取消组件的默认导出
+   	export default connect(
+   		state => ({ count:state }),  // 要设置什么状态值  
+   		{increment, decrment}  // 要传什么参数
+   	)(App)  // 包装谁
+   	
+   	对组件进行包装
+
+```
 
 
-
-
-
-### 案例代码 - 例子见我的React-dome 库
 
 ​	
+
+### React-Redux思想:
+
+
+
+### React-Redux将所有组件分为两大类
+
+
+
+#### 1,  UI组件
+
++ 只负责`UI`的呈现, 不带有任何业务逻辑
++ 通过props接收数据,(一般数据和函数)
++ 不使用任何`Redux`的`API `
++ 一般保存在components文件夹下
+
+
+
+#### 2, 容器组件
+
++ 负责管理数据和业务逻辑, 不负责UI的呈现
++ 使用`Redux` 的`API`
++ 一般保存在`container` 文件夹下
+
+### React-Redux组件
+
+
+
+#### Provider
+
+​	让所有组件都可以得到state数据
+
+​	
+
+```
+	<Provider  store={ store} >   // 委托Provider进行管理
+			<App />
+		</Provider>
+
+```
+
+#### connect()
+
+​	用于包装UI组件生成容器组件
+
+```
+import { connect } from 'react-redux'  // 对组件进行包装
+	connect( 
+    	mapStateToprops,
+    	mapDispatchToprops
+    )( Counter )
+```
+
+
+
+#### mapStateToprops()
+
+​	将外部的数据(即state对象)转化为UI组件的标签属性
+
+```
+const mapStateToprops = function (state) {
+    return {
+        value: state
+    }
+}
+```
+
+### redux异步编程
+
+***`redux`默认不支持异步处理的***
+
+***应用中又需要进行异步任务(`ajax`, 计时器)***
+
+
+
+####通过插件进行redux进行异步编程
+
+​	
+
+​	***`npm install --save redux-thunk`***
+
+
+
+调用`redux`的中间件方法:
+
+​	`import { createStore,  applyMiddleware } form 'redux'`
+
+​	`import thunk from "redux-thunk"`
+
+
+
+
+
+`const store = createStore(`
+
+​	`counter,`
+
+​	`applyMiddleware(thunk)`  // 应用上异步中间件
+
+`)`
+
+ 
+
+在action中返回一个函数:
+
+​	`export const incrmentAsync = (number) => () => {`
+
+​		`return dispath =>{`
+
+​			1秒之后才去分发action
+
+​		`setTimeout( dispath(increment( number) ),1000)`
+
+​	`}`
+
+​	`}`
+
+
+
+### `redux`调试工具包    `redux-devtools-extension`
+
++ 下载谷歌浏览器插件***  `redux-devtools*`**
+
++ 下载工具依赖包:
+
+  + `npm install --save-dev redux-devtools-extension`
+
++ 编码:
+
+  ```
+  import { composeWithDevTools } from 'redux-devtools-extension'
+  
+  const store = createStore(
+  	counter,
+  	composeWithDevTools( applyMiddleware(thunk) ) // 再包一层
+  )
+  ```
+
+  
+
+​	
+
+####使用`combineReducers`将我们的的`reducer`进行合并, 统一管理
+
+```
+export  default combineReducers({
+	counters,    // 指定reducer对应的属性
+	comments	 // 将定义的reducer管理函数放到这里进行整合管理
+})
+
+// redux向外暴露的state是一个什么结构?
+
+	\*** 对象 ***/
+	
+	{ counter:2, comments:[] }
+
+注解:将所有reducer函数的的值都获取了过来.
+
+```
+
+### 学习小结:
+
++ `redux`是一个进行状态管理的库,
+
+![Redux工作流程](![Redux工作流程](./Redux工作流程.png))
+
++ redux中最核心的是store管理对象
+
++ 常用代码块:
+
+  ```
+  // store 模块 
+  import {creatrStore, applyMiddleware} from "redux"
+  import {reducer} from "./reducers/reducer"
+  import thunk from "redux-thunk"
+  const store = createSotre( reducer,
+  	composeWithDevTools( applyMiddleware(thunk) )
+  )
+  
+  
+  // 
+  ```
+
+  
