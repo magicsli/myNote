@@ -205,6 +205,31 @@ node.js  是单线程
 
 
 
+
+
+### 包的导入规则
+
++ 当我们导入一个包的时候,会先在包的根目录中, 查找一个叫做"package.json"的文件
++ 如果有"package.json"文件, 则会继续查找这个文件中的,一个叫做"main"的属性
++ 如果能找到"main"属性, 则尝试加载 "main"属性所指向的那个文件
++ 如果这个文件,加载成功, 则这个包,就已经被正常require进来了,就可以正常使用了
+
+
+
+### 自定义包
+
++ **包都有以一个单独的目录而存在**
++ **`package.json `必须在包的顶层目录下**
++ **`package.json`文件必须符合JSON格式, 并且必须包含如下三个属性: `name`, `version`, `main`**
+  + `name` : 包的名字
+  + `version`: 包的版本号
+  + `main` :表示包的入口文件
++ 二进制文件应该在**bin目录**下
++ javaScript代码应该在**lib目录**下
++ 文档应该在**doc目录下**
++ 单元测试应该在**test目录**下
++ Node.js对包要求并没有那么严格, 只要顶层目录下有`package.json`, 并且符合**基本规范**即可
+
 ### HTTP协议的无状态性
 
 ------
@@ -355,7 +380,7 @@ require("http").createServer( function (request, response) {
 + 6, 中文会乱码, 需要设置请求头
 
   ```
-  res.writeHeaders (200, {
+  res.writeHead (200, {
     "Conten-Type": "text/html; charset:utf-8"
   })
   
@@ -388,6 +413,101 @@ require("http").createServer( function (request, response) {
   ​	resolve   url 拼接    url重定向
 
   ​	url.resolve( url, "新的路径" )
+
+
+
+#### query string
+
+​	进行string 和object 的格式转换
+
+类似于JSON.parse   ||    JSON.stringify
+
+##### API
+
+​		parse 
+
+​		stringify      Object  ==>   string   用来解析对象来传递url后中的参数
+
+​		escape       将文本进行编码
+
+​		unescape     解码,  
+
+
+
+### fs 文件模块
+
+​	**读文件** 
+
+​	  ` require("fs").reafFile("文件路径" ,  (err, data) => {`
+
+​		`err && console.log(读取文件出错);`
+
+​		`data  &&   console.log(data)`
+
+`}  )`
+
+​	
+
+​	**写入文件**
+
+​		
+
+```
+require("fs").writeFile("路径+文件名", "文件内容" ,"内容类型", (err)=>{
+    if(err) {
+        console.log("写入文件错误")
+    }
+} )
+	
+```
+
+​	
+
+​	**给文件增加信息**
+
+require("fs").appendFIle("文件路径" , "要增加的数据 ", "参数", 错误回调函数)
+
+​	注意, 如果文件不存在,会自动创建一个新的文件,并执行增加数据的操作
+
+
+
+
+
+​        **读取文件信息**
+
+​	fs.stat
+
+​		
+
+
+
+
+
+### path
+
+​	`path.sep `  **提供指定平台的路径片段分隔符**
+
+​	`path.join() `  **拼接路径**  
+
+​			`path.join(__dirname, "/file/01.text")`
+
+
+
+​	**读取文件目录 **   `dirname`
+
+​		`fs.readdir(__dirname, (err, filenames) => {`
+
+​		`console.log(filenames)	`
+
+​	`})`
+
+​	
+
+​	**读取文件名**  ` basename`
+
+`
+
+​	**获取文件后缀**  `extname`
 
 
 
