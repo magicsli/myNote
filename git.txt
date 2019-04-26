@@ -93,3 +93,22 @@ git   初始化git仓库    git init
 	  -将master设置为关联,我们再push时就不用再写master了
 	- 当我们在push时,加上了-u参数, 那么在下一次push时,我们只需要写上`git push `就能上传我们的代码. (加上-u之后,git会把当前分支与远程分支进行关联. giu push 变量 master    )
 	- pull定义关联会错误,建议使用push
+
+
+	* git config --global user.name "username" //配置用户名
+
+ 	* git config --global user.password "xx@gmail.com" //配置邮箱 
+
+	* git init //初始化生成一个本地仓库
+
+ 	* git clone url //将远程仓库克隆下载到本地 
+
+	* git add * //添加到暂存区 
+
+	* git commit –m “message” //提交到本地仓库
+
+ 	* git remote add origin url //关联到远程仓库
+
+ 	* git push origin master //push 到远程 
+
+  	* git pull origin master //从远程 pull 更新

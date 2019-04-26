@@ -56,7 +56,152 @@
 
 
 
+### 前端模块化
 
++ 1,  CMD     ( sea.js )
++ 2,  AMD     (  require.js  )
++ 3, Common.js
++ 4,  es6 模块化
+
+CMD 和 AMD 
+
+​	define 定义模块
+
+Node.js中使用了common.js规范 (三类)
+
++ 1,  内置的
++ 2,  第三方的
++ 3,  自定义的 
+
+
+
+#### Node.js 内置了很多的模块
+
++ fs ( 文件系统 )
++ path ( 磁盘路径 )
++ http ( 通信 )
+
+
+
+##### 使用
+
++ 1, 导入
+  + `const 变量名称 = require( "模块名称" );`
++ 2,  使用模块的api
+  + path.resolve( _dirname )   // 获取当前文件的目录路径
+
+#### 在Node.js中使用第三方模块:   http:// www.npmjs.com
+
++ 1,  安装
+  + 1,  初始化生成 package.json       命令:     ` npm  init  -y`
+  + 2,   安装对应的包;      命令:      `npm  i request -D / -S / -g`
+    + -g     -global   全局
+    + -D   /  --save-dev   开发环境
+    + -S   /   -save   生产环境
++ 2,  导入
+  + request  用来做数据请求的
++ 3,  使用
+  + 文档天下第一,什么视频教程全是虚的
+
+
+
+`const` request = require("request")
+
+
+
+**Node.js 中请求数据, 需要跨域么?:**
+
+​	**因为node是在服务器环境下运行**  
+
+​	由于node的运行环境不是浏览器,所有不存在**同源策略**的限制
+
+同源策略
+
++ 1,  为什么会出现跨域
+  + 开发中会有不同的**域名**和**端口**等出现, 我们需要去获取他们的内容
++ 2,  浏览器如何组织跨域
+  + **浏览器**具有安全策略  -->    同源策略实现
++ 3, 跨域的范围是:
+  + 浏览器
+
+#### package.json的作用
+
+​	分析:  帮助我们记录第三方的内容, 即使我们没有node_modules也可以下载
+
+****
+
+
+
+#### 前端的环境
+
++ 1, 开发环境
+
++ 2, 生产环境
+
++ 3, 测试环境
+
++ 4, 预发布环境
+
++ 5, 上线环境
+
+  
+
+#### 自定义模块的步骤
+
++ 1,  定义
+
+  + 对象,  函数,  字符串  ....
+
++ 2, 导出
+
+  + module.export || reports
+
+  + reports 是 module.exports 的一个辅助工具
+
+  + 在 node 导出需要加一个 = 号
+
+  + 基于安全性考虑, 建议封装一下:
+
+     	//  让请求此模块的文件不能修改
+
+    ```
+    module.exports = {
+        age: age.age,
+        name: age.name
+    }
+    ```
+
+    
+
++ 3, 使用
+
+  + const 变量名  = require( ''模块名" )
+
+  注意:  使用自定义模块是需要加路径
+
+  - const  变量名 = require ("./module/模块名")
+
+    
+
++ 4, 自定义模块的发布: 
+
+  + 封装好包
+  + 在 http://www.npmjs.com 上发布
+  + 操作流程:
+    + package-lock.json  ===> 当前项目依赖包的具体信息
+    + 确定当前的源是npm的源, 
+    + npm adduser  注册用户信息(与npmjs账号上一致)
+    + npm publish  发布
+
+  
+
+node.js  是单线程
+
+​	主线程
+
+​	异步队列: Node.js 中异步任务, 放在异步队列
+
+​	注意: 优先执行主线程中任务吗主线程任务结束后,再运行异步队列任务
 
 
 
@@ -159,6 +304,92 @@ server.listen(4000, ()=>{
 
 
 ### 创建最基本的http服务器
+
+​	使用node.js实现一个web服务器,    (API服务器)
+
+​	node.js中模块的api很多时候可以连缀(链式调用)
+
+
+
+​		// 格式:    http.createServer(callback).listen(prot, hostname, callback)
+
+```
+require("http").createServer( function (request, response) {
+		response.writeHeader(200,{
+            "Content-Type": "text/html; charset=utf-8"
+		})
+
+		response.write("yanyabing"); 
+
+		response.end()   // 结束发送
+
+}).listen(port, hostname, function(){
+
+		// 在后端控制台输出
+
+})
+
+```
+
+​	
+
+​	**3, http** :   http协议模块
+
++ 1, createServer  创建一个web静态服务器
+
++ 2, listen    是用来监听服务器
+
++ 3, 名词解释:
+
+  + 1, port  端口
+  + 2, hostname  域名
+  + 3, request  请求
+  + 4,  response  回应
+  + 5,  data   数据
+  + 6,   encoding  编码方式  utf-8 
+
++ 4, `write (data,  encoding)`  给前台发送一个内容
+
++ 5,  `end()`发送已经结束了
+
++ 6, 中文会乱码, 需要设置请求头
+
+  ```
+  res.writeHeaders (200, {
+    "Conten-Type": "text/html; charset:utf-8"
+  })
+  
+  ```
+
+  
+
+  #### 服务器常用模块 
+
+  ####URL
+
+  + 用来做浏览器  地址  解析
+  + 完整的url 构成
+    + https://  www.magicsli.com :80 /vue/index.html  ?name=123&code=456#x=12
+    + 协议:  https
+    + 域名:   www.magicsli.com 
+    + 端口:  : 80
+    + 路径:    www.magicsli.com :80 /vue/index.html
+    + 查找字符串:   ?name=123&code=456
+    + 哈希:   #a=10
+
+  ##### API
+
+  ​	parse :  String ==>   Object         将URL中的字符串数据 转换为**对象**
+
+  ​	format:  Object  ==>  String	将对象转换为字符串   与上一个相反
+
+  ​				-  注:    %20 代表空格
+
+  ​	resolve   url 拼接    url重定向
+
+  ​	url.resolve( url, "新的路径" )
+
+
 
 ![http通信模型](C:\Users\25445\Desktop\http通信模型.png)
 
