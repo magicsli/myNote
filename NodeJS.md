@@ -1,3 +1,7 @@
+
+
+
+
  # NodeJS
 
 ------
@@ -6,9 +10,7 @@
 
    
 
-
-
-	## 目标
+ ## 目标
 
 ------
 
@@ -941,10 +943,72 @@ var port = server.address().port
         res.render("index", person3)
     })
 
-    
 
-+ 中间件
 
-  +  中间件事一个特殊的URL地址处理函数
-  +  																			
 
+
+
+### KOA  
+
+​	**koa是express超集(就是express的进阶版)**
+
+
+
+
+
+ 
+
+
+
+1, webServer
+
+2, apiServer (后端工程师, 前端写接口) ==>  测试工具  ( postman )
+
+​	1, express     ==>     一个路由就是一个接口
+
+​	2, koa  	
+
+3, MongoDB(命令) ==> 连接数据库, 操作数据库  ==> mongoose
+
+4, gulp搭建项目( 跨域 )
+
+
+
+接口示例:
+
+​	
+
+```
+const express = require("express");
+const router = express.Router();
+router.get("./position", function(req, res, next){
+    res.render('position', {msg:"hello word"})
+})
+
+
+module.exports = router
+
+
+
+
+/* 在模板文件中*/
+	/*  position.ejs  */
+	<% !--- js语法 --- %>
+	
+	
+	
+```
+
+
+
+玩架构思想:
+
+​	**RMVC**
+
+​		R	==>	`Router`路由
+
+​		M	==>	`Model`路由
+
+​		V	==>	`VIew`视图
+
+​		C	==>	`Contriller` 控制器( 逻辑 )
