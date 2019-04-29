@@ -783,7 +783,7 @@ inp.pipe(gzip).pipe(out)
 
 ​	1, 进入项目	`cd 项目名称`
 
-​	2, 安装项目需要的依赖	`npm install`
+​	2, **安装项目需要的依赖**	`npm install`                     ---  注意, 这步不能缺少
 
 ​	3, 项目启动(说明书:  package.json 中 scripts 脚本)    `npm start`
 
@@ -851,7 +851,7 @@ inp.pipe(gzip).pipe(out)
 
 
 
-####express中间件使用案例:
+####express使用案例:
 
 ​	
 
@@ -862,15 +862,17 @@ var App = express();
 app.get("/",  function(req, res){    // 这点可以作为路由操控
     res.end("hello  word");
 })
-```
-
-​	var server = app.listen(3000, function(){	
+var server = app.listen(3000, function(){	
 
 var host = server.address().address;
 
 var port = server.address().port
 
 })
+
+```
+
+​	
 
 ####API
 
@@ -1012,3 +1014,4 @@ module.exports = router
 ​		V	==>	`VIew`视图
 
 ​		C	==>	`Contriller` 控制器( 逻辑 )
+

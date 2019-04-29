@@ -315,3 +315,234 @@ db.coll_name.find({$or:[{age:10}, {age:40}]})
 **.count()** 查询到的文档有多少条
 
 ​	db.coll_name.find({$or:[{age:10}, {age:40}]}).count()
+
+
+
+
+
+
+
+### mongoose 模块
+
+​	**安装**:   `npm install mongoose`
+
+​	**连接数据库**
+
+​			1, 确保mongodb数据库的正常运行
+
+​			2, 引入mongoose模块
+
+​			3, 连接数据库:  
+
+​	**`mongoose.connect("mongodb:127.0.0.1:27017/数据库名")`**
+
+步骤:
+
+​	// **安装mongoose**
+
+​		`npm install mongoose`
+
+​	// **导入**
+
+​		`const mongoose = require("mongoose");`
+
+​	// **连接数据库**
+
+​		`mongoose.connect("mongodb://主机名:端口/数据库名称")`
+
+​		// **举例**
+
+​		`mongoose.connect("mongodb://127.0.0.1:27017/test", (err) => {`
+
+`if(!err){`
+
+​	`console.log("服务器连接成功")`
+
+`}elsr{`
+
+​	`throw err`
+
+}
+
+`})	`
+
+
+
+### 新增数据  
+
+​	**Schema**骨架 :    
+
+​		 一种以文件形式存储的数据库模型骨架, 不具备数据库的操作能力
+
+
+
+​	**Model** 模型 :  
+
+​		  由**`Schema`**发布生成的模型, 具有抽象属性和行为的数据库操作对
+
+
+
+​	**Entity**  实体 :    
+
+​		  由**`Model`**创建的实体, 他的操作也会影响数据库
+
+​		
+
+###**存储数据的步骤**:
+
+​	定义**Schema**(骨架)  ==>  创建**`model`**(模型)  ==> **`Entity`**(实例化方法)
+
+
+
+#### **定义骨架**
+
+```
+	const mongoose = require("mongoose");
+	const Schema = mongoose.Schema;
+	
+	const teacherSchema = new Schema( options ) 
+	
+	/*
+		options = {
+            key : key 的数据类型
+		}
+	*/
+	
+	完善:
+		const teacherSchema = new Schema({
+            id : Number,
+            name : String,
+            age : Number
+		})
+	
+	
+```
+
+#### **创建模型**                      ----- 创建集合
+
+​	
+
+```
+const teacherModel = mongoose.model("集合的名称", "定义好的骨架")
+```
+
+
+
+#### 创建实例                     -----  创建文档
+
+
+
+```
+const  teacherEnitity = new teacherModel()
+```
+
+
+
+
+
+#### 数据的存储      实例.save( (err, user) => {  *** } )
+
+​	
+
+```
+teacherEnitity.id = 5
+
+	teacherEnitity.name = "jack"
+
+	teacherEnitity.age = 16
+
+
+
+teacherEnitity.save( (err,  data) => {
+
+	if(err) {
+
+		console.log(err)
+
+	}elsr{
+	
+        console.log(data)
+        
+	}
+
+} )
+
+
+```
+
+#### 数据的查询  
+
+
+
++ **teacherModel.find( {name: }, (err, users) => { } )**
+
++ **teacherModel.findByid(id, (err, doc) => {  } )**
+
++ 
+
+```
+teacherModel.find({age: 10}, (err, result) => {
+   
+   if(!err){
+       
+       console.log(result)
+       
+       const id = result[0]._id
+       
+       // 根据查找的第一个实例的id再进行精确查找
+       teacherModel.findByid(id, (err, doc) => {
+       
+       	 //删除查找到的文档
+       doc.remove( ()=> console.log("delete data success ~") )
+       
+       })
+      
+   }else{
+   
+       console.log(err)
+       
+   }
+   
+})
+```
+
+
+
+#### 数据的修改
+
+​	
+
+```
+teacherModel.find( {name:"yanyabing"}, (err, res)=>{
+    if(!err){
+        
+        const id = res[0]._id;
+        teacherModel.findByid(id, (err, doc)=>{
+            doc.age = 18,
+            doc.save( (err)=>{
+                if(!err){
+                    console.log("data updata success~~")
+                }else{
+                    throw "data updata error"
+                }
+            } )
+            
+        })
+        
+    }else{
+    
+    
+    }
+} )
+```
+
+​    
+
+数据库名称: maoyan
+
+​	大写: 
+
+​		1, 稳定性高,
+
+​		2, 辨识度高
+
