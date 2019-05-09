@@ -92,6 +92,58 @@ Node.js中使用了common.js规范 (三类)
 + 2,  使用模块的api
   + path.resolve( _dirname )   // 获取当前文件的目录路径
 
+
+
+
+
+#### 模块加载机制
+
+​	 , 只要使用 'require' 来加载指定的模块了.  那么, 必然会执行被加载模块中的代码
+
+​	**优先从缓存中加载**
+
+​			node 中, 默认会被曾经加载过的模块, 缓存到内存中,这样,当下次再使用相同的模块, 就直接从缓存中加载, 提高模块的运行效率
+
+
+
+​	**核心模块的加载机制**
+
+​	1,  先从缓存中查找, 如果有, 则直接使用
+
+​	2,  如果缓存中没有, 则根据路径标识符, 加载本地的核心模块并缓存起来, 供下次使用
+
+​			
+
+​	**用户模块的加载机制**
+
+​	1,  先从缓存中查找, 如果有, 则直接使用
+
+​	2,  如果缓存中没有, 则根据路径标识符, 加载本地的核心模块并缓存起来, 供下次使用
+
+​	3,  查找时规则:
+
+​		如果没有指定后缀名, 则严格按照指定名称, 来进行查找
+
+​	index   ==>  index.js  ==>   index.json  ==>  index.node
+
+​	
+
+
+
+​	**第三方模块的加载机制**	
+
+​	1,  先从缓存中查找, 如果有, 则直接使用
+
+​	2,  如果缓存中没有, 则根据路径标识符, 加载本地的核心模块并缓存起来, 供下次使用
+
+​	
+
+
+
+
+
+
+
 #### 在Node.js中使用第三方模块:   http:// www.npmjs.com
 
 + 1,  安装
@@ -240,6 +292,42 @@ node.js  是单线程
 + 2     由于这个通信协议的关系, 导致了HTTP每个请求直接是没有关联的, 每当一个请求完成之后, 服务器就忘记之前谁曾经请求过
 + 3,    如果纯粹基于HTTP 通信模型, 是无法完成登录状态保持的!   每次请求服务器,  服务器都会把这个请求当作新的请求来处理!
 + 4,    我们可以通过cookie 技术, 实现状态保持,  但是由于cookie 是存储在客户端的一门技术, 所以安全性几乎没有, 因此不要使用cookie存储敏感的数据!
+
+
+
+### 中间件
+
+​	**分类:**
+
+​		应用级的中间件:  直接挂载到app 对象 身上的中间件(函数)
+
+​		路由级中间件:    挂载到router对象身上的中间件
+
+​		错误级中间件:     参数列表中,要有四个形参:顺序为 'error', ' req', 'res', 'next'
+
+​		内置中间件:          express.static("./public") 唯一的一个内置中间件
+
+​		第三方中间件:       通过npm安装的中间件, 叫做第三方中间件
+
+
+
+#####	`body-parser`  解析表单数据
+
+​		**用法**:
+
+```
+		const bodyParser = require("body-parser");
+		
+		bodyParser.urlencoded({ extended:false }) 
+        
+        // extended: false 表示, 不使用扩展模块来解析表单数据,  而是使用Node内置的querystring模块来解析表单数据 
+```
+
+
+
+
+
+
 
 
 
@@ -591,9 +679,40 @@ inp.pipe(gzip).pipe(out)
 
 
 
+#### MYSQL数据库
+
+​		**安装模块:**    `npm i mysql -S`
+
+​	在这个模块中 SQL语句中的 ? 表示占位符, 需要使用具体的参数来填充这个问号
 
 
 
+```
+	const mysql = require("mysql")
+	const connection = mysql.createConnection({
+        host:"localhost",
+        user:"me",
+        password:"secret",
+        database:"mydb"
+	})
+	
+	connection.connect();
+	
+	connection.query("SELECT i + 1 AS solution", function (err, res, fields){
+        if(err) throw err;
+        console.log("The solution is: ", result[0].solution );
+	})
+	
+	connection.end();
+	
+	// 还有一种写法
+	connection.query("SELECT i + 1 AS ?", p1, function(err, res, fields){
+        ***
+	})
+	
+	
+	
+```
 
 
 
