@@ -1,4 +1,4 @@
-# 笔记三
+#  笔记三
 
 ## 1, vue深入响应式原理
 
@@ -118,19 +118,405 @@
 
 + 2,  为什么视图修改数据就会修改
 
-  ​	当视图修改时, 意味着DOM的value属性改变了, 就会触发`Set`, `watcher监听机制就会执行,   watcher通知`Vue`进行虚拟DOM重构
+  ​	当视图修改时, 意味着DOM的value属性改变了, 就会触发`Set`, `watcher监听机制就会执行,   watcher通知`Vue`进行虚拟DOM重构进而触发render进行渲染  
 
 
 
 ## 3, axios fetch数据请求
 
+​	Vue没有对AJAX进行封装, 所以我们需要使用第三方库发送请求:
+
+​		axios fetch 两者都是基于**promise** 
+
+-- 原生提供了两种数据请求方式,   1, **ajax**   2, **fetch**
+
+axios:
+
+​	
+
+#### Axios的get请求        数据对象  ==>  params
+
+//  发送get请求
+
+```
+1, ---------------------------------------------------------
+axios.get('https://www.magicsli.com', {
+    method:'get',
+    params:{
+        a:1,
+        b:2
+    }
+}).then( res => {
+ 	console.log(res)
+} ).catch( err => {
+    if(err){
+        console.log(err)
+    }
+} )
+
+2, ----------------------------------------------------------
+axios.post({
+	url: 'https://www.magicsli.com',
+	method:'get',
+	params:{
+        a:1,
+        b:2
+	}
+}).then( res => {
+
+    console.log(res)
+    
+} ).catch( err => {
+
+    if(err){
+        console.log(err)
+    }
+    
+} )
+
+```
+#### Axios的post请求方法       数据对象  ==>  data
+
+```
+// 发送post请求:   !!! 会报错
+
+1,    会报错, 这样传参会出现前端跨域问题. ( 其实请求是成功的 )  注意!!!!  注意!!
+	 axios.post({
+         url:'https://www.magicsli.com',
+         method:'post',
+         data:{
+             a:1,
+             b:2
+         }
+	 }).then( res => {
+	 
+         console.log(res)
+         
+	 } ).catch( err => {
+	 
+         if(err){
+             console.log(err)
+         }
+         
+	 } )
+
+
+```
+
+#####  Axios总结
+
++ **get**
+  + 无参数:    `axios.get(url).then( (res)=>{} ).catch( (err)=>{} )`
+  + 有参数:      
+
+`	`
+
+```
+				axios({
+                    url:'https://www.magicsli.com',
+                    method:'get'	// 默认就是get, 可以省略
+                    params:{
+                       key : value
+                    }
+				})
+```
+
++ **post**
+
+  ​	**注意:    Axios的请求时有坑的,  如果我们直接使用官方文档, 会有未设置请求的跨域报错问题;  解决办法**:
+
+  1,  **统一设置请求头** :
+
+  `axios.defaults.headers.post['Content-Type']=application/x-www-form-unrlencoded`
+
+  
+
+  2, 使用 **` new URLSearchParams`**实例化一个params对象
+
+  
+
+  3, 使用params对象的**apend**方法添加数据
+
+  ```javascript
+  
+  
+  let params = new URLSearchParams();
+  
+  params.apend( a, 3 );
+  
+  params.apend( b, 4 );
+  
+  axios({
+      url:'https://www.magicsli.com',
+      method:'post',,
+      headers:{
+          'Content-Type':'application/x-www-form-urlencode'
+      }
+      data: params
+  })
+  
+  
+  
+  ```
+
+
+####  fetch:             
+
+​		**注意**:  fetch的返回是一个`promise`对象, 我们可以通过**.`then`**的方式来书写.  我们至少要写**两个**`.then` 
+
+  ####   get请求
+
+​	**fetch的get请求传参需要直接在URL上设置, 我们可以使用Node.js提供的URL或者是querystring模块来讲对象转为string**
+
+​	例:
+
+​		   	
+
+```javascript
+fetch('https://www.magicsli.com?a=123&b=456')
+		// 格式化数据
+.then( res =>  res.text() )   //或者 res.json()  和res.blob()
+		//输出
+.then( data => console.log(data) )
+.catch( err => err && console.log(err) )
+```
+
+
+
+#### post 请求
+
+在post请求项中,有一些配置项:  
+
+```javascript
+fetch( url, {
+    
+    body: JSON.stringify(data),   // 请求携带的参数       
+    
+    cache: 'no-cache', // 请求缓存, 当开启时,发送同样的请求会从缓存获取, 就不会再像服务器发送
+    credentials:  'same-origin', // 跨源凭证
+    headers:{
+    'user-agent' : 'Mozilla/4.0 MDN Example',  // 内核
+    'content-type' : 'application/json'      // 内容格式
+},
+    method: "POST", // 请求格式
+    mode:'cors' ,   // 表示跨域的形式为 cors
+    redirect: 'follow',  // 重定向
+    
+    
+} )
+```
+
+
+
+**注意!!!     我们在发送post请求时, 如果直接使用 {a:1, b:2 }这类的方法会报错, 且也不能像官网一样使用JSON.stringify(). 这样依然会报错**
+
+**解决方案**: 
+
++ `new URLSearchParams( ['a', 1], ['b', 2] ).toString()`  来将data进行处理
+
++ 设置请求头   `"Content-Type" : "application/x-www-form-urlencode"`
+
+
+
+### 切记, Axios 和 fetch 的 post方法都是有坑的, 
+
+#### 解决方案:
+
++ 设置请求头
++ 通过 `new URLSearchParams()` ;来进行数据传参
+
+
+
 ## 4, watch监听
+
++ 1, 作用:	
+
+  ​	用来监听数据的变换, 当数据模型( data选项,  m )发送改变时, watch就会触发
+
++ 2, 使用
+
+  
+
+#### 业务:
+
++ **methods:事件**
+
++ computed:
+  + 1, 有逻辑
+  + 2, 像变量一样使用  , 这个时候选computed
++ watch: 
+  + 1, 有异步操作
+  + 2, 开销较大
+
+
+
+
+
+
+
+
+
+```javascript
+1, key的value是一个函数
+
+new Vue({
+    
+	watch:{
+        
+		key() { },
+	}
+})
+
+
+2, key的value值是一个对象
+
+new Vue({
+    
+    watch:{
+        
+        key:{
+            deep:true / fasle,  // 深入监听
+            handler(value, oldValue){
+                console.log("key发生了变化")
+            } // 监听的处理函数
+        }
+    }
+})
+
+watch中的key指的就是data选项中的key
+
+
+
+new Vue({
+    ek:"#app",
+    data:{
+        msg:'1233456'
+    },
+    watch:{
+        msg(value, oldValue){
+            console.log("msg数据发生了改变")
+        }
+    }
+})
+
+
+```
+
+
 
 ## 5, mixins
 
-## 6, 虚拟DOM和diff算法
+​	{ 组件即实例, 实例及组件 }
 
-## 7, 列表渲染中的key的作用
+​	**概念:** mixins:   混合, 将根实例或是组件中的配置项, 抽离出来, 单独管理
 
-## 8, 组件
+#### 类型:
+
+ ##### 	局部混入
+
+```javascript
+			var mixin = {
+            	methods: {
+                    sum(){
+                        alert(10 * 10)
+                    }
+                }
+            }
+            
+            new Vue({
+                el:"#app",
+                data: {},
+                watch: {},
+                mixins: [mixin],
+           // 即使mixin里有了methods,  我们依然可以设置methods,  当发生冲突, 以Vue实例中的为准     
+               	methods: {}
+                computed: {}
+            })
+            
+            
+```
+
+##### 	全局混入
+
+​		注意:    由于全局混入会影响所有的组件, **不推荐**使用
+
+​	
+
+
+
+
+
+
+
+
+
+## 6, 列表渲染中的key的作用
+
+​	**给虚拟DOM添加标记, 保证组件 / 实例 的唯一性;**
+
+​	这点和我们的React中的`key`作用一致
+
+​	如果没有可用 ,会产生问题:
+
+​		VDOM是惰性的, 他有一个原则叫做就地复用
+
+注意: 优先使用数据中能够识别的, 比如 :  id
+
+   
+
+
+
+## 7, 组件
+
+​	**组件使用前必须注册**
+
+​	**注意!    data除了在根实例的情况下,其他情况都是函数:**
+
++ 1, 函数有独立作用域,
++ 2, 函数有return返回值
+
+组件的data选项必须有返回值
+
+### 组件的注册方式:
+
++ 全局注册
+
+
+
+```javascript
+const Hello = Vue.extend({
+    template:' <h2></h2>',
+    data(){
+        return {
+            msg:'你好'
+        }
+    }
+    
+})
+
+// 注册:    Vue.component(组件名, 组件的构造函数)
+
+Vue.component('Hello', Hello)
+
+
+简写:  Vue.component('Hello', {
+    template: "<div>456666</div>",
+     
+}
+
+
+```
+
++ 局部注册
+
+​	// 只能在定义的这个组件环境内使用
+
+```javascript
+new VUe({
+    el:"#app",
+    component:{
+        "Hello" : Hello
+    }
+})
+```
 
