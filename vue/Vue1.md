@@ -6,7 +6,7 @@
 
 ​	`vue.js `是一个`mvvm`的框架
 
-​	`vue.js` 数据也是单向的, 称之为单向数据流
+​	`vue.js` 数据也是单向的, 称之为单向数据流 // 只用input是双向数据流
 
 ​	`vue.js` 不兼容ie8及其以下浏览器
 
@@ -240,7 +240,7 @@ v-else 					  			 否则 ( 配合`v-if`使用 )
 
   
 
-- `v-for  = ' (index, item, key) in data '`
+- `v-for  = ' (item, key, index) in data '`    // 数据,    键值,    索引号
 
   + `index` : 索引
   + `item`: data中的元素

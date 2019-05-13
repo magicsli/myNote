@@ -39,15 +39,17 @@
 
 ​				prop  ==>     要定义或修改的属性的名称
 
-​				descriptor   ==>     将被定义或修改的属性描述符 ;  它是一个对象   					`configurable`: 决定了对象的Key是否可删除
+​				descriptor   ==>     将被定义或修改的属性描述符 ;  它是一个对象 :
+
+  				      `configurable`: 决定了对象的Key是否可删除
 
 ​					`enumerable`:       决定了对象是否可遍历( 枚举 )
 
 ​					`writeable` :   决定了对象的key的value是否可修改
 
-​						-- get 函数   --   设置当前对象的key的初始值
+​					-- get 函数   --   设置当前对象的key的初始值
 
-​						-- set 函数   --    修改当前对象的key值, 当key值发生变化吗set函数会自动调用
+​					-- set 函数   --    修改当前对象的key值, 当key值发生变化吗set函数会自动调用
 
 
 
@@ -520,3 +522,42 @@ new VUe({
 })
 ```
 
+
+
+
+
+### [组件名大小写](https://cn.vuejs.org/v2/guide/components-registration.html#%E7%BB%84%E4%BB%B6%E5%90%8D%E5%A4%A7%E5%B0%8F%E5%86%99)
+
+
+
+定义组件名的方式有两种：
+
+
+
+#### 使用 kebab-case
+
+```vue
+Vue.component('my-component-name', { /* ... */ })
+```
+
+当使用 kebab-case (短横线分隔命名) 定义一个组件时，你也必须在引用这个自定义元素时使用 kebab-case，例如 `<my-component-name>`。
+
+
+
+#### 使用 PascalCase
+
+```vue
+Vue.component('MyComponentName', { /* ... */ })
+```
+
+当使用 PascalCase (首字母大写命名) 定义一个组件时，你在引用这个自定义元素时两种命名法都可以使用。也就是说 `<my-component-name>` 和 `<MyComponentName>` 都是可接受的。注意，尽管如此，直接在 DOM (即非字符串的模板) 中使用时只有 kebab-case 是有效的。
+
+
+
+
+
+**所以,   ( 在dom中使用组件!!!!!! )  vue推荐使用  `red-block` 这类组件名**
+
+
+
+**如果在JSX语法糖下, 也可以使用与react一致的组件命名**
