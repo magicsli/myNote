@@ -247,21 +247,22 @@ increment(){
    
 
     - 2,  `created`                            --  组件初始化完成    
-
+    
        - 表示组件创建结束, 
-
+    
        - 这个钩子函数中, **数据拿到了, 但是DOM没有拿到**    
-
+    
        - 这个钩子在项目中:
-
+    
           - **数据请求, 然后可以进行一次默认数据的修改**
 
-         
 
-         
+​         
+
+​         
 
     - 3,  `beforeMounte`                     --    准备挂载
-
+    
        - 表示组件装载前的准备工作
           - 判断`el`选项有没有, 判断`template`选项有没有, 如果没有,则需要手动装载
           - 如果有, 那么通过`render`函数进行模板的渲染( 没有做, 处于虚拟dom阶段)
@@ -272,7 +273,9 @@ increment(){
 
    
 
-   
+
+
+
 
     - 4,  `mounted`                            --    挂载完成
        - 组件装载完成,就是我们可以在视图中看到了
@@ -287,26 +290,193 @@ increment(){
 
 
 
-### 运行 / 更新
-
-
-
-### 组件卸载阶段
 
 
 
 
 
 
+## 附:
+
+#### 1, props数据验证
+
+
+
+```javascript
+props:{
+   
+        key: keyType    // key是从父组件获得的自定义属性, 值是数据类型
+    
+}
+
+
+props:{
+    key: {
+        type: Object,           // 数据类型
+        
+        validator(value){			// 数值判断
+            return value 的条件  
+        },
+            
+      	default(){				// 默认值
+           return 123
+        },
+       
+        required: true          // 必须的
+        
+    }
+}
+
+有时候有的项目总会使用一个 vue-validate  validate这些第三方库
+```
 
 
 
 
 
-### 多组件状态共享
+####2 过滤器
 
-+ 使用Vue-Router
-+ 使用状态管理工具
+- vue 1.x 一共提供了10个过滤器, 但是不满足人们使用. vue 2.x全部不提供了, 交给开发者自己写
+- 但是vue提供了自定义过滤器的方式
+- 过滤器, 对数据进行过滤操作( 格式化 )的一个函数
+- 过滤器可以用在两个地方, 双花括号插值和v-bind表达式
+- 过滤器用给一个' | ' 表示, 我们称之为' 管道符 '
 
 
 
+```html
+		<div id="root">
+			<p>
+                {{ time }}
+            </p> 
+            
+          	 <p>
+                {{ time | timeFilter }}
+             </p> 
+		</div>
+```
+
+
+
+```javascript
+new Vue({
+    el:"#root",
+    data:{
+        time: Date.now()
+    },
+    filters:{
+        timeFilter( value ){
+            
+            // 将时间的毫秒差转化为事件戳
+            return new Date( value )
+        }
+    }
+})
+```
+
+
+
+
+
+#### 自定义指令
+
+```javascript
+Vue.directive('focus', {
+    bind(){
+        console.log('指令和元素第一次绑定')
+    },
+    inserted(el, binding, vnode, oldVnode){
+        
+    }
+})
+```
+
+
+
+- 指令的钩子函数( 一共有5个 )
+  - bind                 // 第一次绑定触发
+  - inserted           // 绑定的元素插入时触发
+  - update             //  子元素更新前触发
+  - componentUpdate   // 子元素完全更新后触发
+  - unbind           //  解绑时触发 
+
++ 钩子函数的参数
+  + el              当前元素
+  + binding      前端指令的所有信息
+  + vNode         当前指令绑定的虚拟节点
+  + oldVnode    指令绑定前的虚拟节点
+
+
+
+
+
++ 全局自定义指令
+
+  ​	Vue.directive( 指令的名称, 指令的配置项(钩子函数) )`
+
++ 局部自定义指令
+
+  ​		
+
+  ```javascript
+  new Vue({
+      el:'#app',
+      directive:{
+          'focus':{
+              inserted(el, binding){
+                  el.focus()
+              }
+          }
+      }
+  })
+  ```
+
+
+
+### 渲染函数   和    JSX
+
++ 1, 渲染函数   render函数   ==>    createElement
+
++ 2,  JSX ( javascript + xml )
+
+  - xml 就是一种标签化的数据格式
+
+  ```
+  new Vue({
+      el:'#app',
+      render(){
+          return( <div>  </div> )
+      }
+  })
+  ```
+
+  
+
+
+
+### 动画
+
+> > 过渡: 使用css3中的transition来实现动画效果<
+> >
+> > 动画:  利用js或者animation来实现
+
+
+
+​	- Vue 中给了四种解决方案, 但是我们常用的只有一种- 
+
++ 在css 过渡和动画中自动应用 class
++ 可以配合使用第三方 CSS 动画库, 如 Animate.css
++ 在过渡钩子函数中使用javaScript直接操作dom
++ 可以配合第三方动画库, 如 Velocity.js
+
+
+
++ 动画钩子
+  + `beforeEnter`
+  + `enter`
+  + `afterEnter`
+  + `enterCancelled`
+  + `beforeLeave`
+  + `leave`
+  + `afterLeave`
+  + `leaveCancelled`
