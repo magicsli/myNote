@@ -56,3 +56,4 @@
     - 增加一个判断, 
     - 使用promise, 在请回数据后第三方实例初始化
     - `Vue.nextTick()`  / `this.$nextTick()`
+

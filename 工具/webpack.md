@@ -92,6 +92,149 @@
 
 ​	`webpack` 是前端的一个项目构建工具, 它是基于 `Node.js` 开发出来的一个前端工具;
 
++ 资源打包工具
++ 可以解决模块化依赖问题
++ ES6模块化
+
+
+
+
+
+
+
+
+
+### 前端环境
+
++ 开发环境
+
++ 生产环境
+
++ 测试环境
+
++ 预发布环境
+
++ 上线环境
+
+  
+
+   - 开发环境  和  生产环境   都是有前端静态服务器来提供
+
+   - 测试环境   本地客户端服务器提供
+
+   - 预发布和上线环境是  nginx    
+
+     
+
+
+
+#### webpack.config.js配置
+
++ 1, 单页面
+
+  + 入口文件   **相对路径**
+
+  + 出口文件   **磁盘路径**
+
+    + 为什么要配置hash 
+
+      + 保存上一个版本的信息, 不进行文件的覆盖
+
+    + 配置hash
+
+      ```javascript
+      output:{
+          path:path.join(__dirname, dist),
+          filename: 'js/main_[hash:6].js'
+      }
+      ```
+
+  + 转换器:  将某一类型的文件转成另一类型文件的一个工具, 我们常用loader来表示
+
+    -- 在`webpack`中, 所有其他类型的文件全部要转化为js文件
+
+     
+
+    + css      // css模块文件
+    + css-loader   // sass模块的加载器所有的loader用一个module的配置项表示
+
+    ```javascript
+    module:{
+        rules:[
+            { //每一个对象表示一个类型文件的转换器
+                
+                // 检索所有后缀为.css文件
+                test: /\.css$/, 
+                // 使用数组中的加载器进行加载, (css)
+                use:['style-loader', 'css-loader'] 
+            } 
+        ]
+    }
+    ```
+
+    
+
++ 多页面
+
+  ​	entry写成对象, 代表多个入口
+
+  - 修改入口文件 使用对象
+  - 修改出口文件   使用 [ name ]
+
+  ```javascript
+  module.exports = {
+      entry:{  // 多页面
+          // 入口文件的名称 : 入口文件的路径
+          index: './src/index.js',
+          app:'./src/app.js'
+      },
+      output: {
+          path: path.resolve(__dirname, 'dist'),
+          filename:'js/[name].js'
+      }
+  }
+  ```
+
+  
+
++ 自动解决模块依赖问题 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -104,7 +247,7 @@
 
 2, 使用`webpack `	- 是基于整个项目进行构建的
 
-+ j借助于`webpack`这个前端自动化构建工具, 可以完美的实现资源的合并, 打包, 混淆等诸多功能.
++ 借助于`webpack`这个前端自动化构建工具, 可以完美的实现资源的合并, 打包, 混淆等诸多功能.
 
 + 根据官网的图片介绍`webpack`打包的过程
 
@@ -118,7 +261,7 @@
 
 ------
 
-​	1, 运行`npm i webpack -g`全局安装`webpack`,这样就能在全局使用`webpack`中的命令
+​	1, 运行`npm i webpack webpack-cli -g`全局安装`webpack`,这样就能在全局使用`webpack`中的命令
 
 ​	2, 根据项目目录中运行`npm i webpack --save-dev`安装到项目依赖中,
 

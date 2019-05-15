@@ -277,6 +277,8 @@ increment(){
 
 
 
+
+
     - 4,  `mounted`                            --    挂载完成
        - 组件装载完成,就是我们可以在视图中看到了
        - 这个钩子函数中, 数据拿到了, 真实DOM也拿到了
@@ -473,10 +475,23 @@ Vue.directive('focus', {
 
 + 动画钩子
   + `beforeEnter`
+
   + `enter`
+
   + `afterEnter`
+
   + `enterCancelled`
+
   + `beforeLeave`
+
   + `leave`
+
   + `afterLeave`
+
   + `leaveCancelled`
+
+    
+
+### 插槽  slot
+
+​	给组件里面的内容留空位
