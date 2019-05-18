@@ -197,7 +197,93 @@
 
   
 
-+ 自动解决模块依赖问题 
+  
+
+
+
+
++ 优雅降级 -  安装babel-loader   @babel/core   @babel/preset-env 
+
+  
+
+​     {     // 优雅降级
+
+​                    test:/\.js$/,
+
+​                    exclude:/node_modules/,   // 排除
+
+​                    use:[{ 
+
+​                        loader:'babel-loader',  //加载器
+
+​                        options:{
+
+​                          presets :['@babel/preset-env']   // 解析什么
+
+​                        }
+
+​                     }]
+
+​                }
+
+
+
+
+
+
+
++ css 代码抽离( 将src目录css文件打包到dist目录中, 并且自动在index.HTML中引入link )
+
+  + 先安装
+
+    `npm i extract-text-webpack-plugin -D`
+
+  + 在`webpack.config.js`中引入
+
+    ` const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin") `
+
+  + 在css的loader转换器中进行使用
+
+  ```javascript
+  module: {
+      rules:[
+          {
+              test:/\.css$/,
+               use:ExtractTextWebpackPlugin.extract({
+                  use:'css-loader'
+              })
+          }
+      ]
+  },
+      plugins:[
+          new ExtractTextWebpackPlugin('css/[name]_[hash:6].css')
+      ]
+  ```
+
+
+
+
++ 3. 图片打包
+   - base64 将数据量较小的图片（4K以下）转成 字符编码  ， 它可以减少http请求， 从而加快页面加载速度
+
+  ```javascript
+  moudle:{
+      relus:[
+          {
+              test:/\.(jpg|png|gif|svg)/,
+              use:[
+                  loader:'url-loader',  // base 64 转化器
+                  options:{
+                  limit:5000,	// 大于5000字节的就不转化
+                  outputPath:'img/'    // 输出路径
+                  }
+              ]
+          }
+      ]
+  }
+  ```
+
+  
 
 
 
@@ -209,21 +295,33 @@
 
 
 
++ 4. 静态资源拷贝
++ 5. 配置文件抽离
+   - 创建一个config目录，然后在里面新建两个webpack配置文件
+       - webpack.config.dev.js
+       - webpack.config.prod.js
+   - 修改package.json中npm脚本命令
+  ```json
+    "dev": "webpack --mode development --config config/webpack.config.dev.js",
+    "build": "webpack --mode production --config config/webpack.config.prod.js",
+    "server": "webpack-dev-server --mode development --config config/webpack.config.dev.js"
+  ```
+
+
+
+- 修改配置文件中的路径， 
+
+  - 将相对路径， 修改为 磁盘路径
+
+    path.resolve(__dirname, ' path'  )
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
++ 6. 错误资源定制
+   1. 精确找到错误源代码位置
+      `devtool: 'source-map'`
 
 
 

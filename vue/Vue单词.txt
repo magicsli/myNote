@@ -1,0 +1,13 @@
+  /*      这个单词表针对于vue的开发单词       */ 
+
+	methods  事件
+	components  子组件
+	watch  	  监听
+	model     模块,  (v-model  双向数据绑定 )
+	computed   计算属性
+	template   模板
+	el         元素
+	props      属性
+	required   必须的 
+	validator   验证
+	deep        深入
