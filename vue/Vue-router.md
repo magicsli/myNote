@@ -1,4 +1,4 @@
-# 笔记七
+# **笔记七
 
 
 
@@ -345,7 +345,7 @@ query用来设置路径值
 
 + 2, 导航守卫一共有三种形式
 
-  + 全局导航守卫
+  + **全局导航守卫**
 
     + **全局前置守卫**     `router.beforeEach(fn)`
       + `fn`中有三个参数 ( to, from, next )
@@ -355,7 +355,7 @@ query用来设置路径值
 
     
 
-    + 全局解析守卫
+    + **全局解析守卫**
 
       ​	在 2.5+ 你可以使用`router.beforeResolve`注册一个全局守卫,这回`router.beforEach`类似, 区别是在导航被确认之前,同时在所有组件内守卫和异步路由组件被解析之后, 解析守卫就被调用
 
@@ -365,7 +365,7 @@ query用来设置路径值
 
     
 
-    + 全局后置守卫; 这个钩子没有next存在
+    + **全局后置守卫**; 这个钩子没有next存在
       + 可以做一些用户友好提示, 
 
     
@@ -374,7 +374,7 @@ query用来设置路径值
 
   
 
-  + 路由独享守卫
+  + **路由独享守卫**
     + 写在路由表中的守卫钩子
 
   ```javascript
@@ -395,7 +395,7 @@ query用来设置路径值
 
   
 
-  + 组件内守卫
+  + **组件内守卫**
 
     + **`beforeRouteEnter`**    进入组件前
       + 渲染该组件的对应路由被confirm前调用
@@ -437,9 +437,10 @@ query用来设置路径值
     
 
     + **`beforeRouteUpdate`**   组件更新前
-      + 在当前路由改变但是该组件被复用是调用
+      + **在当前路由改变但是该组件被复用时调用**
       + 举例来说, 对于一个带有动态参数的数据`/food/:id`和`/foo/2`之间跳转的时候
-      + 由于会渲染同样的foo组件, 因此组件实例
+      + 由于会渲染同样的foo组件, 因此组件实例会被复用,而这个钩子会在这个情况下被调用.
+      + 可以访问组件实例` ' this '`
 
     
 
@@ -521,5 +522,119 @@ router.beforeEach( (to, from, next) => {
 
 ​	
 
+业务:
 
+ - 监听整个项目的路由变化情况           全局的前置守卫
+ - 监听某个路由的变化情况                    路由的独享守卫
+ - 监听某个组件的路由变化                     组件的独享守卫
+
+
+
+
+
+
+
+### 路由激活
+
+ - 自己熟悉一个类名或者是使用第三方给的类名
+
+ - 在router-link 组件身上添加一个  `active-class`的属性
+
+   
+
+   ```html
+   <router-link to="/home" active-class = 'active' />
+   ```
+
+   
+
+###路由缓存
+
+  - 在 `router-link` 组件上添加一个属性 `keep=alive`
+
+    ```html
+    <router-link to="/home" keep-alive> </router-link>
+    ```
+
+    
+
+###路由的动画
+
+ + 先安装 animate.css 可以模块化引入 `yarn add  animate.css`
+ + 在`main.js`中引入  `import animate.css`
+ + 将`router-view` 组件用transition组件包裹
+ + 在` transition` 组件身上添加 `enter-active-class ` 和 `leave-active-class`
+
+
+
+###路由的数据预载
+
++ 核心 
+  + `next(vm => {Vm.set(vm.dataAttr, key, value) })`
+  + `next(vm => {Vm.setDate(vm.dataAttr, value)})`
+
++ 以上两个方法的区别是:
+
+  + **第一种方法**
+
+  ```javascript
+  next( vm => {
+      const result = JSON.parse(res.data.slice(7,-1 ).re_result.categorys ;
+   	vm.$set(vm.category, 'categorys', result)
+                               
+  } )
+  
+  
+  // data中数据必须这样定义
+  data () {
+      return {
+          data: {
+              category: null
+      }
+  }
+  ```
+  + **第二个方法**
+
+    ```javascript
+    next( vm => vm.setData(vm.dataAttr, post) )
+    
+    
+    data () {
+    	return {
+        	category : null
+        }
+    }
+    ```
+
+    
+
+### 路由懒加载
+
++ 概念:  指的是, 对应的路由加载对应的路由组件 -- 按需加载路由
++ Vue异步组件
++ webpack的代码分隔
+
+```javascript
+const routerLayLoad = ( comName ) => {
+    return () => {
+        import(/* webpackChunkName: "view-[request]" */ '../components/pages/${view}.vue')
+    }
+}
+
+
+const routes = [
+    {
+        path: '/home',
+        component: routerLayLoad( "Home" )
+    },
+    {
+        path: '/about',
+        component: routerLayLoad( "About" )
+    }
+]
+
+
+
+
+```
 

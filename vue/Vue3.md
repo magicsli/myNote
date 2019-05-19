@@ -110,6 +110,55 @@
 + 4, `Vue.set`的底层原生是什么:?
   + `Object.assign( 目标对象,  对象1,  对象2,  对象三)`
 
+
+
+#### 非响应情况
+
+​	1, 数组下标
+
+```html
+<div id = "app">
+    <button @click = "change" > 点击 </button>
+    <ul>
+        <li v-for = '(item, index) in list' :key = 'index'>
+        	<p>
+                {{ item }}
+            </p>
+        </li>
+    </ul>
+</div>
+```
+
+```javascript
+new Vue({
+    el:'#app',
+    data:{
+        list:['a','b','c','d']
+    },
+    methods:{
+        change () {
+            this.$set(this.list, '0', 'junge')
+        }
+    }
+})
+```
+
+- 解决方案 :   使用`Vue.set  ||    this.$set`
+
+
+
+
+
+删除一个数组时, 可以使用arr.length = 0, 但是vue不会响应
+
+解决方案: 使用splice( new Length )
+
+当我们 
+
+
+
+
+
 ## 2, `vue`双向数据绑定原理
 
 ### 原理:
