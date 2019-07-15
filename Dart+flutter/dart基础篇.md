@@ -38,8 +38,9 @@
  				"""			// 可显示多行文本
     
    ------ 字符串拼接 ------
-    print("$str1 $str2") // 利用$在字符串中插入变量
-    print( str1 + str2 ) // 利用 + 号进行字符串拼接
+    print("$str1 $str2"); // 利用$在字符串中插入变量
+    print("${this.name}好"); // 利用 ${ } ( 类似es6的模板字符串 )
+    print( str1 + str2 ); // 利用 + 号进行字符串拼接
 ```
 
 
@@ -155,7 +156,7 @@ class Person extends People {
 		this.hate = hate;
     }
     
-    // 私有属性, 私有属性必须要在独立文件; 带以下划线开头的方法或属性就是私有的, 外部不能调用
+    // 私有属性, 私有属性必须要在独立文件; 带以下划线开头的方法或属性就是私有的, 外部不能调用(类似局部作用域)
     String _name = "123456";
     
     
@@ -164,6 +165,10 @@ class Person extends People {
         print( "${ this.name } love ${ this.love }; and... i hate ${ this.hate } " )
     }
 }
+	// get set 
+
+
+
 
 // 运算操作符 ? is as ..
 
@@ -204,5 +209,112 @@ class Dog extends Animal {
 }
 
 
+/*
+	Dart抽象类, Dart抽象类主要用于定义标准, 子类可以继承抽象类, 也可以实现抽象类接口.
+
+        1, 抽象类通过abstract 关键字来定义
+
+        2, Dart中的抽象方法不能用abstract声明, Dart中没有方法体的方法我们称为抽象方法.
+
+        3, 如果子类继承抽象类必须得实现里面的抽象方法
+
+        4, 如果把抽象类当做接口的话必须的实现抽象类中的所有属性和方法
+
+        5, 抽象类不能被实例化, 只有继承它的子类可以
+	
+	
+	extends抽象类 和 implements的区别:
+	
+		1, 如果要复用抽象类中的方法, 并且要用抽象方法约束子类的话我们就用extends继承抽象类
+		
+		2, 如果只是把抽象类当做标准的话我们就用implements实现抽象类
+	
+
+
+*/
+
+
+
+/*
+	mixins
+		1, 作为mixins的类只能继承自Object, 不能继承其他类
+		2, 作为mixins的类不能用有构造函数, 
+		3, 一个类可以mixins多个mixins类
+		4, mixins绝不是继承, 也不是接口, 而是一种全新的特性
+		
+	mixins使用 with 关键字进行操作:
+	
+		class A {
+			String ingo = "123456";
+			
+		}
+		
+		class B {
+			String add = "addEvent";
+		}
+		
+		class c with A,b {
+			
+		}
+		
+		
+		此时 c 就获得了 A,Bd的属性
+	
+		
+*/
+
 ```
 
+
+
+
+
+#### 泛型
+
+```dart
+class Public_people <T> {
+    // 泛型代表不定义传入参数, 当用户生成新的工具对象时, 可位此类定义一个类型
+}
+```
+
+
+
+#### 库
+
+​	在Dart中, 有三类库:
+
++ 1, 自定义库:` import "./lib/Person.dart"`
++ 2, Dart自带库: `import "dart:math"`
++ 3, Pub包管理系统中的库: 
+  + `https://pub.dev/packages`
+  + `https://pub.flutter-io.cn/packages`
+  + `https://pub.dartlang.org/flutter/`
+  + 操作:
+    + 1, 需要在自己的项目根目录新建一个`pubspec.yaml`
+    + 2, 在`pubspec.yaml`文件 然后配置名称, 描述, 依赖等信息
+    + 3, 然后运行 `pub get` 获取包下载到本地
+    + 4, 项目中引入库 `import 'package:http/http.dart' as http` 看文档使用
+
+
+
+
+
+**重命名:**
+
+​	`import 'package/lib/lib.dart' as lib`
+
+===>  将这个包重命名为lib   <===
+
+
+
+**部分导入:**
+	如果只需要导入库的一部分, 有两种模式:
+
++ 模式一: 只导入需要的部分, 使用show关键字, 如下例子所示:
+
+​		`import 'package:lib1/lib1.dart' show foo;`
+
+
++ 模式二: 隐藏不需要的部分, 使用hide关键字, 如下例子所示:
+
+  `import 'package:lib2/lib2.dart' hide foo;`

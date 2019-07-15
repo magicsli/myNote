@@ -117,4 +117,4 @@ git   初始化git仓库    git init
 
 	* git clone -b five ssh链接  通过ssh复制项目
 
-	git pull   拉取
+	* git pull   拉取
