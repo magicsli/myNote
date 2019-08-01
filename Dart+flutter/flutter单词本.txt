@@ -1,0 +1,86 @@
+	widget 部件
+	statelesswidget 无状态组件
+	statefulwidget  有状态组件
+	@override   	重写, 继承上列两组件所必须携带的方法
+	container	容器
+	decoration	颜色/装饰
+	   
+	
+     --  文本组件 Text 的方法:
+
+		' hello word ', 		// 显示内容
+		textAlign: TextAlign.left,	// 左对齐
+		overflow: TextOverflow.ellipsis,// 文字溢出省略
+		maxLines: 1,			// 最大显示行数
+		textScaleFactor: 2 ,		// 字体放大倍数
+		style: TextStyle(		// 样式
+			fontSize: 16.0		// 字体大小 (double类型)
+		),
+		decoration: TextDecoration.lineThrough // 文本装饰-删除线 
+		
+
+     -- 图片组件 image 的方法:
+		 
+	image.network () 	// 从网络上获取图片
+	image.assets ()		// 从本地加载静态图片
+	image.file ()		// 加载图片文件
+	image.memory ()		// 从内存中加载...
+
+	例:
+	
+		image.network(
+	"https://bbsimage.res.meizu.com/forum/2019/06/30/183851DW0670B046848f4N.jpg",
+	width: 200.0 // 宽度
+	height: 200.0 // 高度
+	color: Colors.red	// 背景颜色 ( 覆盖在图片之上 )
+	fit: BoxFit.cover,               // 展开方式
+	repeat: ImageRepeat.repeatx	// x轴平铺
+		)
+
+
+	-- ListView和ListTile 组件的方法:
+		
+		List<widget> _getData() {  // 自定义一个遍历
+
+			List<widget> list = new List();
+		
+			for ( var i = 0; i < 20; i++ ) {
+				list.add(ListTile(
+				    title: Text('这是第$i行')
+				));
+			}
+			
+			return list
+			
+		}
+
+		ListView(	// 创建一个ListView列表
+		    children: this._getData()		
+		)
+
+
+
+	-- GridView 网格布局容器:
+
+		GridView.count(
+		    crossAxisCount: 2	// 分为几列
+		    children: <widget>[	// 传入一个widget数组
+
+				Text('this is a context'),
+				Text('this is a context'),
+				Text('this is a context'),
+				Text('this is a context'),
+				Text('this is a context'),
+				Text('this is a context'),
+				Text('this is a context'),
+				Text('this is a context'),
+
+			]
+		
+		)
+
+
+
+
+
+		

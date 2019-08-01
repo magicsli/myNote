@@ -81,7 +81,7 @@
 
 ​	在flutter中, 我们如果需要为widget添加样式, 不能想css那样添加, 我们需要通过定义好的类进行补充; 如:
 
-`Style( color: Color('red') )`
+`Style( color: Color.fromRGBO( 23, 51, 23, 0.6 ) );`
 
 
 
@@ -134,7 +134,7 @@ class Myapp extends statelesswidget {
 
 
 
-我们创建的所有自定义组件都必须继承于这两个类,  继承后会必须传入一个必要方法, `build`
+我们创建的所有自定义组件都必须继承于这两个类,  继承后都必须传入一个必要方法, `build`
 
 我们将在这方法的返回参数中返回新的`widget`, 类似于`react`中的`render`方法. 二者比较相近
 
@@ -155,4 +155,80 @@ class About extends statelesswidget {
 
 
 
+
+在flutter中所有组件都是一个类,我们定义的所有属性, 样式,布局容器等都需要在类中进行包裹, 属于类包类的写法. 
+
+这一点和我们前端中的语法有比较大的差异.  在前端中我们将 HTML,  JS , CSS 都进行了分离.  我们只需要在js区域
+
+写逻辑代码. 但是在flutter中由于我们都是用一个类包裹.所以样式可能会和布局内容写在一起. 
+
+
+
+
+
+## 列表渲染
+
+我们可以使用独立方法进行动态列表渲染; 写法类似与react的jsx语法
+
+​	例:
+
+```dart
+List<widget> _getData () {
+    List<widget> dataList = new List();
+    for ( var i = 1; i < 10; i++ ){
+        dataList.add( ListTile(
+        	title: Text( '这是第$i行列表' ),
+            leading: Image.network('https://www.magicsli.com?***示例图片.png')
+        ) );
+    };
+    return dataList
+}
+
+ListView(
+	children: this._getData(),
+)
+```
+
+
+
+
+
+如果传入的不是一个数组, 我们就需要将其转化为数组: ` return ` dataList.toList()
+
+
+
+**使用`Listview.builder()`进行列表渲染**
+
+```dart
+
+List data = [ // 虚拟数据
+    {
+        title: '示例标题',
+        imgUrl: 'https://www.magicsli.com?***示例图片.png'
+    }
+]
+
+return ListView.builder(
+	itemCount: this.data.length,
+    itemBuilder: ( context, index) {
+        return ListTile(
+       		title: Text(this.data[index]['title']),
+            leading: Image.network( this.data[index]['imgUrl'] )
+        )
+    }
+)
+```
+
+
+
+
+
+## 网格布局 GridView
+
+```dart
+GridView.count(
+	crossAxisCount: 3,			// 分为三列
+    children: <widget>[]		// 传入一个数组
+)
+```
 
