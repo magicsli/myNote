@@ -1,6 +1,6 @@
 	widget 部件
-	statelesswidget 无状态组件
-	statefulwidget  有状态组件
+	statelesswidget 无状态组件	/
+	statefulwidget  有状态组件	/ 
 	@override   	重写, 继承上列两组件所必须携带的方法
 	container	容器
 	decoration	颜色/装饰
