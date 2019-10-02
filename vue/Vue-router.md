@@ -617,7 +617,7 @@ router.beforeEach( (to, from, next) => {
 ```javascript
 const routerLayLoad = ( comName ) => {
     return () => {
-        import(/* webpackChunkName: "view-[request]" */ '../components/pages/${view}.vue')
+       return import(/* webpackChunkName: "view-[request]" */ '../components/pages/${view}.vue')
     }
 }
 

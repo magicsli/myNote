@@ -16,7 +16,7 @@
 
 	注: 我们在 输入节点时 也可以和js 混装
 	
-	--   如果 type = "text/babel"  且是 src 引用的外部资源  并且使用src引用的外链资源,则必须使用 HTTP 服务进行访t问
+	--   如果 type = "text/babel"  且是 src 引用的外部资源  并且使用src引用的外链资源,则必须使用 HTTP 服务进行访问
 
 	
 
@@ -52,7 +52,7 @@
 		--预备代码:
 		function Person(props){
 			return <ul>
-				   <li>{props.name}</li>	
+				   <li>{props.name}</li>
 				   <li>{props.age}</li>
 				   <li>{props.sex}</li>
 			       </ul>
@@ -65,7 +65,7 @@
 		
 	ReactDOM.render(<Person name={data.name}age ={data.age} sex={data.sex} />, document.queryselector(".app"));
 
-	   	即因为组件是需要重复调用的,并且每次调用需要显示的值各有不同,所以这里我们就需要一种新的办法进行传参(注意: 数据要进行验证类型, 需要设置默认值)
+	   	即因为组件是需要重复调用的,并且每次调用需要显示的值各有不同,所以这里我们就需要一种新的办法进行传参(注意: 数据要进行验证类型,需要设置默认值)
 	  设置组件的默认值:
 		Person.defaultProps = {
 			
@@ -117,8 +117,8 @@
 
 	render(){
 		return (
-			  <div> 
-				<List /> 
+			  <div>
+				<List />
 				<Add  />
 			  </div>)
 		}
@@ -150,8 +150,8 @@
 	   父组件定义函数,传递给子组件,子组件调用
 14, 获得表单数据,
 	16, 
-	受控组件: 
-	<input type="text" value = {this.state.user} onChange = {this.handleChange}/>
+	受控组件:
+	<input type="text" value = {this.state.user} onChange ={this.handleChange}/>
   		
 	不受控组件:
 	<input type = "text" ref = { input => this.input = input } / >
@@ -224,10 +224,12 @@
 
  	axios演示:
 			-- get请求
-	axios.get(url).then( resolveResult => {
-		console.log(resolveResult.data) },
+	axios.get(url)
 
-		rejectResult => {  
+		.then( resolveResult => {
+		console.log(resolveResult.data) })
+
+		.catch(rejectResult => {  
 		console.log(rejectResult.data ) } )
 
 
@@ -459,8 +461,8 @@
 
 
 	慕课网实战笔记:
-		jq就所有mvc框架, 就是控制层
 
+		jq就所有mvc框架, 就是控制层
 		react, Facebook开源的一个JavaScript库
 		react结合生态库构成mv*框架
 		react特点
@@ -477,7 +479,7 @@
 
 	Vue 生态:  Vue + vue-Router + Vuex +  Axios + Babel + webpack
 	
-	React生态: React + React-Router + Vuex + Axios + Babel + webpack
+	React生态: React + React-Router + Redux + Axios + Babel + webpack
 	
 
 	编程式实现:
