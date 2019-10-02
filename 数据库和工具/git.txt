@@ -66,6 +66,8 @@ git   初始化git仓库    git init
 	git push  ** GitHub存储库链时接 ** master
 		第一次输入需要账号和密码
 	会把当前分支的内容上传到master分支上
+
+
 	
 	提交时需要在本地提交
 
@@ -112,3 +114,7 @@ git   初始化git仓库    git init
  	* git push origin master //push 到远程 
 
   	* git pull origin master //从远程 pull 更新
+
+	* git clone -b five ssh链接  通过ssh复制项目
+
+	* git pull   拉取
