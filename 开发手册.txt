@@ -1,0 +1,48 @@
+	1， 文件名使用全小写， 使用中横线划分， 例： BaseSearchOption => base-search-option
+	2,   git commit message： 
+		## Git 规范
+
+			使用 [commitlint](https://github.com/conventional-changelog/commitlint) 工具，常用有以下几种类型：
+
+			- feat ：新功能
+			- fix ：修复 bug
+			- chore ：对构建或者辅助工具的更改
+			- refactor ：既不是修复 bug 也不是添加新功能的代码更改
+			- style ：不影响代码含义的更改 (例如空格、格式化、少了分号)
+			- docs ： 只是文档的更改
+			- perf ：提高性能的代码更改
+			- revert ：撤回提交 
+			- test ：添加或修 
+
+			举例
+			git commit -m 'feat: add list'
+
+
+			提交之前二次检查
+			git diff
+			git status
+			git restore --staged apps/mobile/src/controllers/pkgmarketing/activity/index.js
+			git status
+			git diff
+
+		提测流程：如果有具体的禅道bug， git message 格式为：
+		
+		` fix:#bug 编号 `
+
+	提交测试：冒烟 =》 提测
+
+	冒烟（冒烟：简单主体流程）（提测：大版本进行全面测试）
+	项目：www.tuishan
+	分支：feat-2021020-v2.1.8
+	@测试
+
+	前端规范参考(非团队规范): https://juejin.im/post/6844903652096770055
+	--- 
+		路由在设置动态路由是避免直接 :id 作为path路径， 可能会造成（一个未知的路由堆叠问题）； 
+		设计路由建议不要使用大量无意义空路由。
+		路由文件name绝对唯一，不允许重复
+		在使用超过一个值的路由传参是， 使用query进行传参（切记， 不允许过长的url）
+		所有的组件（component） 必须使用大写字母开头 例如： import BaseSearch from '@/component/base-search'
+		路由js文件以及文件夹使用横杠进行区分
+		从主线代码（master）合并至当前的开发分支（dev-xxx）;
+		
